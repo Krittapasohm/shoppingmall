@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class MyConstant {
   //Genernal
-  static String appName = 'shoppingmall';
+  static String appName = 'Delivery';
 
   //Route
   static String routeAuthen = '/authen';
@@ -14,7 +14,7 @@ class MyConstant {
   static String routeRiderService = '/riderService';
 
   // Image
-  static String image1 = 'images/image1.png';
+  static String image1 = 'images/image1.jpg';
   static String image2 = 'images/image2.png';
   static String image3 = 'images/image3.png';
   static String image4 = 'images/image4.png';
@@ -39,5 +39,12 @@ class MyConstant {
         fontSize: 14,
         color: dark,
         fontWeight: FontWeight.normal,
+      );
+
+  ButtonStyle myButtonStyle() => ElevatedButton.styleFrom(
+        primary: MyConstant.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
       );
 }
