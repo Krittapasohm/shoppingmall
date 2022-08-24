@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoppingmall/utillity/my_constant.dart';
 import 'package:shoppingmall/widgets/show_image.dart';
@@ -16,6 +17,24 @@ class CreateAccoun extends StatefulWidget {
 class _CreateAccounState extends State<CreateAccoun> {
   String? typeUser;
   File? file;
+
+  @override
+  void initState() {
+    super.initState();
+    findLatLng();
+  }
+
+  Future<Null> findLatLng() async {
+    bool locationService;
+    LocationPermission locationPermission;
+
+    locationService = await Geolocator.isLocationServiceEnabled();
+    if (locationService) {
+      print('Service Location Open');
+    } else {
+      print('Service Location Close');
+    }
+  }
 
   Row buildName(double size) {
     return Row(
@@ -200,23 +219,24 @@ class _CreateAccounState extends State<CreateAccoun> {
             buildAddress(size),
             buildTitle('รูปภาพ'),
             buildSubtitle(),
-            buildAvatar(size)
+            buildAvatar(size),
           ],
         ),
       ),
     );
   }
 
-  Future<Null> chooseImage(ImageSource source)async{
+  Future<Null> chooseImage(ImageSource source) async {
     try {
-
-      var result = await ImagePicker()
-
-
-    } catch (e) {
-      
-    }
-
+      var result = await ImagePicker().pickImage(
+        source: source,
+        maxWidth: 800,
+        maxHeight: 800,
+      );
+      setState(() {
+        file = File(result!.path);
+      });
+    } catch (e) {}
   }
 
   Row buildAvatar(double size) {
@@ -225,7 +245,7 @@ class _CreateAccounState extends State<CreateAccoun> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          onPressed: ()=> chooseImage(ImageSource.camera),
+          onPressed: () => chooseImage(ImageSource.camera),
           icon: Icon(
             Icons.add_a_photo,
             size: 36,
@@ -235,10 +255,12 @@ class _CreateAccounState extends State<CreateAccoun> {
         Container(
           margin: EdgeInsets.symmetric(vertical: 16),
           width: size * 0.6,
-          child: file == null ? ShowImage(path: MyConstant.avatar) : Image.file(file!),
+          child: file == null
+              ? ShowImage(path: MyConstant.avatar)
+              : Image.file(file!),
         ),
         IconButton(
-          onPressed: () =>chooseImage(ImageSource.gallery),
+          onPressed: () => chooseImage(ImageSource.gallery),
           icon: Icon(
             Icons.add_photo_alternate,
             size: 36,
