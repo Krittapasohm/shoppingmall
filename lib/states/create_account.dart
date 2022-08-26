@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoppingmall/utillity/my_constant.dart';
+import 'package:shoppingmall/utillity/my_dialog.dart';
 import 'package:shoppingmall/widgets/show_image.dart';
 import 'package:shoppingmall/widgets/show_title.dart';
 
@@ -33,6 +34,7 @@ class _CreateAccounState extends State<CreateAccoun> {
       print('Service Location Open');
     } else {
       print('Service Location Close');
+      MyDialog().alertLocationService(context);
     }
   }
 
