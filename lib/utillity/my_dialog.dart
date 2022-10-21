@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shoppingmall/utillity/my_constant.dart';
 import 'package:shoppingmall/widgets/show_title.dart';
+import 'package:shoppingmall/widgets/show_image.dart';
 
 class MyDialog {
-  Future<Null> alertLocationService(BuildContext context) async {
+  Future<Null> alertLocationService(
+      BuildContext context, String title, String message) async {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: ListTile(
           title: ShowTitle(
-            title: 'Location Service ปิดอยู่',
+            title: title,
             textStyle: MyConstant().h2Style(),
           ),
-          subtitle: ShowTitle(
-              title: 'กรุณาปิด Location Service ด้วยครับ',
-              textStyle: MyConstant().h3Style()),
+          subtitle:
+              ShowTitle(title: message, textStyle: MyConstant().h3Style()),
         ),
         actions: [
           TextButton(
@@ -28,6 +29,20 @@ class MyDialog {
               },
               child: Text('OK'))
         ],
+      ),
+    );
+  }
+
+  Future<Null> normalDialog(
+      BuildContext context, String title, String message) async {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: ListTile(
+            leading: ShowImage(path: MyConstant.image1),
+          title: ShowTitle(title: title, textStyle: MyConstant().h2Style()),
+          subtitle: ShowTitle(title: message, textStyle: MyConstant().h3Style()),
+        ),children: [TextButton(onPressed: (() => Navigator.pop(context), child: Text)],
       ),
     );
   }
